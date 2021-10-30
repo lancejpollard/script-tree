@@ -12,7 +12,7 @@ const fork = (list) => {
   return stem
 }
 
-const norm = (text) => text.replace(/([A-Z])/g, (_, $1) => `${$1.toLowerCase()}+`)
+const norm = (text) => text
 
 const form = (text, tree) => {
   let stem = tree
@@ -20,6 +20,10 @@ const form = (text, tree) => {
 
   for (let i = 0, n = text.length; i < n; i++) {
     let note = text[i]
+    if (!stem) {
+      throw text
+    }
+
     if (stem[0][note]) {
       stem = stem[0][note]
     } else {
