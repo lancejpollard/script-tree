@@ -15,10 +15,14 @@ const fork = (list) => {
 const norm = (text) => text
 
 const form = (text, tree) => {
-  let stem = tree
-  let blob = []
+  const blob = []
+  const stack = []
 
-  for (let i = 0, n = text.length; i < n; i++) {
+  let stem = tree
+
+  let i = 0
+  let n = text.length
+  while (i < n) {
     let note = text[i]
     if (!stem) {
       throw text
@@ -26,15 +30,33 @@ const form = (text, tree) => {
 
     if (stem[0][note]) {
       stem = stem[0][note]
+      stack.push({ i, stem })
+      i++
     } else {
-      blob.push(stem[1])
-      stem = tree[0][note]
+      resolveStack()
     }
   }
 
-  if (stem[1]) {
-    blob.push(stem[1])
+  function resolveStack() {
+    let stackI = stack.length - 1
+
+    while (stackI >= 0) {
+      let data = stack[stackI--]
+      if (!data) {
+        throw new Error(`${text} => ${i}`)
+      }
+
+      if (data.stem[1]) {
+        blob.push(data.stem[1])
+        i = data.i + 1
+        stack.length = 0
+        stem = tree
+        break
+      }
+    }
   }
+
+  resolveStack()
 
   return blob.join('')
 }
