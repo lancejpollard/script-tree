@@ -23,18 +23,22 @@ const form = (text, tree) => {
 
   let i = 0
   let n = text.length
-  while (i < n) {
-    let note = text[i]
-    if (!stem) {
-      throw text
-    }
 
-    if (stem[0][note]) {
-      stem = stem[0][note]
-      stack.push({ i, stem })
-      i++
-    } else {
-      resolveStack()
+  function loop() {
+    while (i < n) {
+      let note = text[i]
+
+      if (!stem) {
+        throw text
+      }
+
+      if (stem[0][note]) {
+        stem = stem[0][note]
+        stack.push({ i, stem })
+        i++
+      } else {
+        resolveStack()
+      }
     }
   }
 
@@ -59,7 +63,10 @@ const form = (text, tree) => {
     throw text
   }
 
-  resolveStack()
+  while (i < n) {
+    loop()
+    resolveStack()
+  }
 
   return blob.join('')
 }
