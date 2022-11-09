@@ -15,6 +15,7 @@ const fork = (list) => {
 const norm = (text) => text
 
 const form = (text, tree) => {
+  if (!text) return ''
   const blob = []
   const stack = []
 
@@ -51,9 +52,11 @@ const form = (text, tree) => {
         i = data.i + 1
         stack.length = 0
         stem = tree
-        break
+        return
       }
     }
+
+    throw text
   }
 
   resolveStack()
