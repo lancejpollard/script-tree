@@ -261,3 +261,4 @@ const tree = x.fork(list)
 
 console.log(x.form('tGo#&', tree))
 console.log(x.form('rh!U^vEC', tree))
+console.log(x.list('rh!U^vE_C', tree))

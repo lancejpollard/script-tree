@@ -7,14 +7,14 @@ const fork = (list) => {
       let note = i[k]
       link = link[0][note] = link[0][note] || [ {}, null ]
     }
-    link[1] = o
+    link[1] = { i, o }
   })
   return stem
 }
 
 const norm = (text) => text
 
-const form = (text, tree) => {
+const list = (text, tree) => {
   if (!text) return ''
   const blob = []
   const stack = []
@@ -68,11 +68,19 @@ const form = (text, tree) => {
     resolveStack()
   }
 
-  return blob.join('')
+  return blob
+}
+
+const form = (text, tree) => {
+  if (!text) return ''
+  const blob = list(text, tree)
+
+  return blob.map(x => x.o).join('')
 }
 
 module.exports = {
   fork,
   norm,
+  list,
   form
 }
