@@ -29,7 +29,7 @@ const list = (text, tree) => {
       let note = text[i]
 
       if (!stem) {
-        throw text
+        throw new Error(text)
       }
 
       if (stem[0][note]) {
