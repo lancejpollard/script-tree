@@ -15,7 +15,7 @@ const fork = (list) => {
 const norm = (text) => text
 
 const list = (text, tree) => {
-  if (!text) return ''
+  if (!text) return []
   const blob = []
   const stack = []
 
@@ -60,7 +60,7 @@ const list = (text, tree) => {
       }
     }
 
-    throw text
+    throw new Error(text)
   }
 
   while (i < n) {
